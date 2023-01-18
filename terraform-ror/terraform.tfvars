@@ -64,9 +64,9 @@ instance_app_name = "PHX-OP-LAB15-1-VM-APP"
 instance_db_name  = "PHX-OP-LAB15-1-VM-DB"
 
 # MySQL configuration
-mysql_root_pass  = "RootPassword123%"
-mysql_rails_user = "rubyonrails"
-mysql_rails_pass = "RailsPassword123%"
+mysql_root_pass  = "RootPassword123%" # Example password
+mysql_rails_user = "rubyonrails" # Example username
+mysql_rails_pass = "RailsPassword123%" # Example password
 
 # Load balancer configuration
 lb_config = {
