@@ -21,3 +21,7 @@ This repository contains the example code used in the OCI Operations Professiona
 * An example Ansible playbook to install and restart Apache, and open the firewall to HTTP
 * Ensure that the target machines have the public SSH key of your local machine (which should be the OCI Cloud Shell/Code Editor VM in this case)
 * For use with *Operations Lab 8-1* and *DevOps Lab 2-1*
+
+### terraform-ror
+* Sample HCL for deploying Ruby on Rails with Terraform
+* For use with *Operations Lab 15-1*
