@@ -1,0 +1,29 @@
+#cloud-config
+
+write_files:
+  - path: /home/opc/configure_mysql.sql
+    content: |
+      ALTER USER 'root'@'localhost' IDENTIFIED BY '${ root_pass }';
+      FLUSH PRIVILEGES;
+      CREATE USER '${ rails_user }'@'%'
+        IDENTIFIED BY '${ rails_pass }';
+      GRANT ALL
+        ON *.*
+        TO '${ rails_user }'@'%'
+        WITH GRANT OPTION;
+
+runcmd:
+  # Install MySQL Community
+  - sudo rpm -ivh https://repo.mysql.com/mysql80-community-release-el8-4.noarch.rpm
+  - sudo dnf module disable -y mysql
+  - sudo dnf install -y mysql-community-server
+  # Start MySQL Server
+  - sudo systemctl start mysqld
+  - sudo systemctl enable mysqld
+  # Get the temporary root password
+  - "pass=$(sudo awk -F': ' '/temporary password/ {print $NF}' /var/log/mysqld.log)"
+  # Execute the SQL script to change the root password and create a new user for Rails
+  - mysql -sfu root -p$${pass} --connect-expired-password < "/home/opc/configure_mysql.sql"
+  # Open the firewall for MySQL
+  - sudo firewall-offline-cmd --add-service=mysql
+  - sudo systemctl restart firewalld
